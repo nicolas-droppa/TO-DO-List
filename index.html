@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/toolbox.css">
     <title>ToDo-List</title>
 </head>
 <body>
-    <button id="dayNightButton">Button</button>
-    hello
+    <div class="toolbox">
+        <button id="createListButton"><i class="fa-solid fa-square-plus"></i></button>
+        <button id="dayNightButton"><i class="fa-solid fa-sun"></i></button>
+    </div>
+
     <div class="list-container">
         <div id="todoList0" class="todo-list">
+            <div class="list-color"></div>
             <div class="list-header">
-                <div class="list-title"></div>
+                <div class="list-title">Title</div>
                 <div class="list-rename"></div>
-                <div class="list-remove"></div>
+                <div class="list-remove"><i class="fa-solid fa-trash-can"></i></div>
             </div>
             <button id="addTaskButton"><i class="fa-solid fa-circle-plus"></i></button>
             <div class="list-tasks">

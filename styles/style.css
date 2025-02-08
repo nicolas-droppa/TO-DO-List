@@ -1,8 +1,10 @@
+/*@import url('variables.css');*/
 :root {
     --text-color: #1a1a1a;
     --text-color-light: #2d2d2d;
     --bg-color: #f1f0f0;
     --bg-color-complement: #979797;
+    --main-color: #e8e6e6;
 }
 
 .dark-mode {
@@ -10,6 +12,7 @@
     --text-color-light: #cccaca;
     --bg-color: #161616;
     --bg-color-complement: #383838;
+    --main-color: #1d1d1d;
 }
 
 * {
@@ -19,11 +22,27 @@
 }
 
 body {
-    display: flex; 
-    flex-direction: column;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--text-color);
     background: var(--bg-color);
     background-image: radial-gradient(var(--bg-color-complement) 1px, transparent 0);
     background-size: 1rem 1rem;
     background-position: -1rem -1rem;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.todo-list {
+    width: 20rem;
+    padding: 1rem;
+    margin: .5rem;
+    background-color: var(--main-color);
+}
+
+.list-header {
+    display: flex;
+    flex-direction: row;
 }
