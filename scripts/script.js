@@ -1,5 +1,68 @@
-function createList(){
+function createList(listId){
+    const listContainer = document.getElementById("list-container");
 
+    const todoList = document.createElement("div");
+    todoList.id = `todoList${listId}`;
+    todoList.classList.add("todo-list");
+
+    const listColor = document.createElement("div");
+    listColor.classList.add("list-color");
+
+    const listContent = document.createElement("div");
+    listContent.classList.add("list-content");
+
+    const listHeader = document.createElement("div");
+    listHeader.classList.add("list-header");
+
+    const listTitle = document.createElement("div");
+    listTitle.classList.add("list-title");
+    listTitle.textContent = "Title";
+
+    const listRename = document.createElement("div");
+    listRename.classList.add("list-rename");
+    const renameButton = document.createElement("button");
+    renameButton.id = "renameListButton";
+    renameButton.classList.add("edit-task-button");
+    renameButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>';
+    listRename.appendChild(renameButton);
+
+    const listRemove = document.createElement("div");
+    listRemove.classList.add("list-remove");
+    const removeButton = document.createElement("button");
+    removeButton.id = "removeListButton";
+    removeButton.classList.add("edit-task-button");
+    removeButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    listRemove.appendChild(removeButton);
+
+    const listTasks = document.createElement("div");
+    listTasks.classList.add("list-tasks");
+
+    listHeader.appendChild(listTitle);
+    listHeader.appendChild(listRename);
+    listHeader.appendChild(listRemove);
+
+    listContent.appendChild(listHeader);
+    listContent.appendChild(listTasks);
+
+    const addTaskContainer = document.createElement("div");
+    addTaskContainer.classList.add("add-task-container");
+
+    const addTaskBg = document.createElement("div");
+    addTaskBg.classList.add("add-task-bg");
+
+    const addTaskButton = document.createElement("button");
+    addTaskButton.id = "addTaskButton";
+    addTaskButton.classList.add("task-button");
+    addTaskButton.innerHTML = '<i class="fa-solid fa-square-plus"></i>';
+    
+    addTaskBg.appendChild(addTaskButton);
+    addTaskContainer.appendChild(addTaskBg);
+
+    todoList.appendChild(listColor);
+    todoList.appendChild(listContent);
+    todoList.appendChild(addTaskContainer);
+
+    listContainer.appendChild(todoList);
 }
 
 function deleteList(){
@@ -110,5 +173,7 @@ document.addEventListener("click", function (event) {
 
         if (todoList)
             addTask(todoList.id, todoList.querySelector(".list-tasks"));
+    } else if (event.target.closest("button#createListButton")) {
+        createList(0);
     }
 });

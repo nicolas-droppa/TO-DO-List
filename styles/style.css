@@ -75,6 +75,7 @@ body {
     width: 12rem;
     font-size: 1.5rem;
     font-weight: 800;
+    margin-bottom: 1.5rem;
 }
 
 .list-rename {
@@ -164,6 +165,13 @@ body {
 
 .single-task-button:hover i{
     cursor: pointer;
+}
+
+.add-task-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color);
 }
 
 #deleteTaskButton {
