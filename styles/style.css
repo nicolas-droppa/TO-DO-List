@@ -197,9 +197,10 @@ body {
 }
 
 #completeTaskButton i{
+    font-size: 1.2rem;
     color: var(--bg-color-complement);
 }
 
 #completeTaskButton:hover i{
-    color: var(--green-color-hover);
+    color: var(--blue-color-hover);
 }

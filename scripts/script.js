@@ -12,6 +12,8 @@ function addTask(listId, taskContainer) {
     input.placeholder = "Enter task name...";
     input.classList.add("task-input");
 
+    const MAX_CHARS = 18;
+
     function saveTask() {
         if (input.value.trim() !== "") {
             const task = document.createElement("div");
@@ -28,10 +30,27 @@ function addTask(listId, taskContainer) {
             renameButton.addEventListener("click", () => renameTask(taskText));
 
             const completeButton = document.createElement("button");
-            completeButton.innerHTML = '<i class="fa-solid fa-check"></i>';
+            completeButton.innerHTML = '<i class="fa-regular fa-square"></i>';
             completeButton.classList.add("single-task-button");
             completeButton.id = 'completeTaskButton';
-            completeButton.addEventListener("click", () => task.classList.toggle("completed"));
+
+            completeButton.addEventListener("click", () => {
+                task.classList.toggle("completed");
+
+                const icon = completeButton.querySelector("i");
+                const text = task.querySelector("span");
+                if (task.classList.contains("completed")) {
+                    icon.classList.replace("fa-square", "fa-square-check");
+                    icon.style.color = "var(--blue-color)";
+                    text.style.color = "var(--bg-color-complement)";
+                    text.style.textDecoration = "line-through";
+                } else {
+                    icon.classList.replace("fa-square-check", "fa-square");
+                    icon.style.color = "var(--bg-color-complement)";
+                    text.style.color = "var(--text-color)";
+                    text.style.textDecoration = "none";
+                }
+            });
 
             const deleteButton = document.createElement("button");
             deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
@@ -52,6 +71,12 @@ function addTask(listId, taskContainer) {
         input.remove();
     }
 
+    function enforceCharacterLimit(e) {
+        if (input.value.length >= MAX_CHARS && e.key != "Backspace" && e.key != "Enter") {
+            e.preventDefault();
+        }
+    }
+
     function onEnterPress(e) {
         if (e.key === "Enter") {
             saveTask();
@@ -61,6 +86,14 @@ function addTask(listId, taskContainer) {
     function onBlur() {
         saveTask();
     }
+
+    input.addEventListener("keypress", enforceCharacterLimit);
+    input.addEventListener("keydown", enforceCharacterLimit);
+    input.addEventListener("input", () => {
+        if (input.value.length > MAX_CHARS) {
+            input.value = input.value.slice(0, MAX_CHARS);
+        }
+    });
 
     input.addEventListener("keypress", onEnterPress);
     input.addEventListener("blur", onBlur);
