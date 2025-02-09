@@ -45,6 +45,7 @@ body {
 .list-container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .todo-list {
@@ -134,4 +135,71 @@ body {
 #removeListButton:hover i{
     cursor: pointer;
     color: var(--red-color-hover);
+}
+
+.task-item {
+    position: relative;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-bottom: solid 0.0625rem var(--main-color-complement);
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.single-task-button {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.single-task-button i{
+    font-size: 1rem;
+}
+
+.single-task-button:hover i{
+    cursor: pointer;
+}
+
+#deleteTaskButton {
+    position: absolute;
+    right: 0;
+}
+
+#deleteTaskButton i{
+    color: var(--red-color);
+}
+
+#deleteTaskButton:hover i{
+    color: var(--red-color-hover);
+}
+
+#renameTaskButton {
+    position: absolute;
+    right: 1.5rem;
+}
+
+#renameTaskButton i{
+    color: var(--blue-color);
+}
+
+#renameTaskButton:hover i{
+    color: var(--blue-color-hover);
+}
+
+#completeTaskButton {
+    margin-right: 1.5rem;
+}
+
+#completeTaskButton i{
+    color: var(--bg-color-complement);
+}
+
+#completeTaskButton:hover i{
+    color: var(--green-color-hover);
 }
