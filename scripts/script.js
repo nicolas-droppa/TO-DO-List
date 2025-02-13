@@ -1,3 +1,7 @@
+/**
+ * Creates new list
+ * @param {int} listId id of new list
+ */
 function createList(listId){
     const listContainer = document.getElementById("list-container");
 
@@ -65,10 +69,18 @@ function createList(listId){
     listContainer.appendChild(todoList);
 }
 
+/**
+ * Deletes list
+ */
 function deleteList(){
 
 }
 
+/**
+ * Creates and appends task to list
+ * @param {int} listId id of list
+ * @param {div} taskContainer div to where new task will be appended
+ */
 function addTask(listId, taskContainer) {
     const input = document.createElement("input");
     input.type = "text";
