@@ -1,5 +1,8 @@
 const button = document.getElementById('dayNightButton');
 
+/**
+ * Applies darkmode based on local storage
+ */
 function applyDarkMode() {
     const darkMode = localStorage.getItem('dark-mode');
     if (darkMode === 'enabled') {
