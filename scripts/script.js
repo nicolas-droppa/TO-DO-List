@@ -3,7 +3,7 @@
  * @param {int} listId id of new list
  */
 function createList(listId){
-    const listContainer = document.getElementById("list-container");
+    const listContainer = document.getElementById("listContainer");
 
     const todoList = document.createElement("div");
     todoList.id = `todoList${listId}`;
@@ -66,13 +66,22 @@ function createList(listId){
     todoList.appendChild(listContent);
     todoList.appendChild(addTaskContainer);
 
+    console.log(listContainer);
     listContainer.appendChild(todoList);
+    console.log(todoList);
 }
 
 /**
  * Deletes list
  */
 function deleteList(){
+
+}
+
+/**
+ * Renames the task
+ */
+function renameTask(){
 
 }
 

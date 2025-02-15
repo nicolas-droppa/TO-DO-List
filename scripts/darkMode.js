@@ -1,10 +1,12 @@
+import { DARK_MODE_STORAGE_KEY } from './constants.js';
+
 const button = document.getElementById('dayNightButton');
 
 /**
  * Applies darkmode based on local storage
  */
 function applyDarkMode() {
-    const darkMode = localStorage.getItem('dark-mode');
+    const darkMode = localStorage.getItem(DARK_MODE_STORAGE_KEY);
     if (darkMode === 'enabled') {
         document.body.classList.add('dark-mode');
     } else {
@@ -15,13 +17,13 @@ function applyDarkMode() {
 applyDarkMode();
 
 button.addEventListener('click', () => {
-    const darkMode = localStorage.getItem('dark-mode');
+    const darkMode = localStorage.getItem(DARK_MODE_STORAGE_KEY);
 
-    if (darkMode === 'enabled') {
+    if (darkMode === 'enabled') { 
         document.body.classList.remove('dark-mode');
-        localStorage.setItem('dark-mode', 'disabled');
+        localStorage.setItem(DARK_MODE_STORAGE_KEY, 'disabled');
     } else {
         document.body.classList.add('dark-mode');
-        localStorage.setItem('dark-mode', 'enabled');
+        localStorage.setItem(DARK_MODE_STORAGE_KEY, 'enabled');
     }
 });
