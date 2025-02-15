@@ -69,6 +69,7 @@ function createList(listId){
     console.log(listContainer);
     listContainer.appendChild(todoList);
     console.log(todoList);
+    console.log(getStoredIds());
 }
 
 /**
