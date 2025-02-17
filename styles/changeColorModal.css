@@ -1,0 +1,79 @@
+/*@import url('variables.css');*/
+:root {
+    --text-color: #1a1a1a;
+    --text-color-light: #f7f7f7;
+    --bg-color: #f1f0f0;
+    --bg-color-complement: #979797;
+    --main-color: #f7f7f7;
+    --main-color-complement: #eeeeee;
+    --main-color-complement-hover: #ebebeb;
+    --red-color: rgb(255, 79, 79);
+    --red-color-hover: rgb(220, 64, 64);
+    --blue-color: rgb(79, 120, 255);
+    --blue-color-hover: rgb(51, 82, 186);
+    --green-color: rgb(79, 255, 135);
+    --green-color-hover: rgb(66, 206, 110);
+    --box-shadow-color: #1a1a1a;
+}
+
+.dark-mode {
+    --text-color: #dcd7d7;
+    --text-color-light: #181818;
+    --bg-color: #161616;
+    --bg-color-complement: #383838;
+    --main-color: #1d1d1d;
+    --main-color-complement: #1a1a1a;
+    --main-color-complement-hover: #151515;
+    --box-shadow-color: #000000;
+}
+
+.change-color-modal-bg {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: #202020ad;
+    z-index: 999;
+}
+
+.change-color-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 5rem;
+    width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .2rem;
+    background-color: var(--main-color);
+    box-shadow: 1px 1px 5pX 1px var(--box-shadow-color);
+    z-index: 1000;
+}
+
+.change-color-modal-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.change-color-modal-content > * {
+    width: 2rem;
+    height: 1rem;
+    margin: .5rem;
+}
+
+.ccm-red {
+    background-color: red;
+}
+
+.ccm-blue {
+    background-color: blue;
+}
+
+.ccm-green {
+    background-color: green;
+}
+
+.ccm-yellow {
+    background-color: yellow;
+}
