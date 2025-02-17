@@ -4,7 +4,7 @@ import { CURRENT_LIST_ID_STORAGE_KEY, MAX_LISTS } from './constants.js';
  * Loads the stored list IDs from localStorage.
  * @returns {number[]} Array of IDs (0-9)
  */
-function getStoredIds() {
+export function getStoredIds() {
     return JSON.parse(localStorage.getItem(CURRENT_LIST_ID_STORAGE_KEY)) || [];
 }
 
@@ -20,7 +20,7 @@ function saveIds(idList) {
  * Finds the lowest available ID (from 0 to 9) and assigns it to a new list.
  * @returns {number|null} Assigned ID or null if the limit is reached.
  */
-function assignNewId() {
+export function assignNewId() {
     let idList = getStoredIds();
 
     if (idList.length >= MAX_LISTS) {

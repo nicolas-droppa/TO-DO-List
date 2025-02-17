@@ -1,3 +1,5 @@
+import { assignNewId, getStoredIds } from './listIdHandler.js';
+
 /**
  * Creates new list
  * @param {int} listId id of new list
@@ -196,6 +198,6 @@ document.addEventListener("click", function (event) {
         if (todoList)
             addTask(todoList.id, todoList.querySelector(".list-tasks"));
     } else if (event.target.closest("button#createListButton")) {
-        createList(0);
+        createList(assignNewId());
     }
 });
