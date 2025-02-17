@@ -138,6 +138,18 @@ body {
     color: var(--red-color-hover);
 }
 
+#changeListColorButton i{
+    font-size: 1.5rem;
+    margin-top: .3rem;
+    margin-left: .5rem;
+    color: var(--blue-color);
+}
+
+#changeListColorButton:hover i{
+    cursor: pointer;
+    color: var(--red-color-hover);
+}
+
 .task-item {
     position: relative;
     padding-top: .5rem;
