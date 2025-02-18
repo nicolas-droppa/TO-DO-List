@@ -199,5 +199,27 @@ document.addEventListener("click", function (event) {
             addTask(todoList.id, todoList.querySelector(".list-tasks"));
     } else if (event.target.closest("button#createListButton")) {
         createList(assignNewId());
+    } else if (event.target.closest("button#changeListColorButton")) {
+        showColorModal();
     }
+});
+
+function hideColorModal() {
+    const modal = document.getElementById("modalBg");
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+function showColorModal() {
+    const modal = document.getElementById("modalBg");
+
+    if (modal) {
+        modal.style.display = "flex";
+    }
+}
+
+document.getElementById("modalBg").addEventListener("click", () => {
+    hideColorModal();
 });
