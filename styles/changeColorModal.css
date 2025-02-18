@@ -14,6 +14,15 @@
     --green-color: rgb(79, 255, 135);
     --green-color-hover: rgb(66, 206, 110);
     --box-shadow-color: #1a1a1a;
+
+    --ccm-color-red: #ff3535;
+    --ccm-color-orange: #ff9d35;
+    --ccm-color-yellow: #fffc35;
+    --ccm-color-green: #5dff35;
+    --ccm-color-cyan: #35ffff;
+    --ccm-color-blue: #3578ff;
+    --ccm-color-purple: #8d35ff;
+    --ccm-color-pink: #ff35d7;
 }
 
 .dark-mode {
@@ -42,7 +51,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     height: 5rem;
-    width: 20rem;
+    width: 28rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,18 +72,16 @@
     margin: .5rem;
 }
 
-.ccm-red {
-    background-color: red;
+.change-color-modal-content > *:hover {
+    cursor: pointer;
+    outline: .0625rem solid var(--text-color);
 }
 
-.ccm-blue {
-    background-color: blue;
-}
-
-.ccm-green {
-    background-color: green;
-}
-
-.ccm-yellow {
-    background-color: yellow;
-}
+.ccm-red { background-color: var(--ccm-color-red); }
+.ccm-orange { background-color: var(--ccm-color-orange); }
+.ccm-yellow { background-color: var(--ccm-color-yellow); }
+.ccm-green { background-color: var(--ccm-color-green); }
+.ccm-cyan { background-color: var(--ccm-color-cyan); }
+.ccm-blue { background-color: var(--ccm-color-blue); }
+.ccm-purple { background-color: var(--ccm-color-purple); }
+.ccm-pink { background-color: var(--ccm-color-pink); }
