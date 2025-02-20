@@ -209,7 +209,10 @@ document.addEventListener("click", function (event) {
     } else if (event.target.closest("button#createListButton")) {
         createList(assignNewId());
     } else if (event.target.closest("button#changeListColorButton")) {
-        showColorModal();
+        const todoList = event.target.closest(".todo-list");
+
+        if (todoList)
+            showColorModal(todoList);
     }
 });
 
@@ -221,12 +224,24 @@ function hideColorModal() {
     }
 }
 
-function showColorModal() {
+function showColorModal(taskContainer) {
     const modal = document.getElementById("modalBg");
 
-    if (modal) {
-        modal.style.display = "flex";
+    if (!modal) return;
+    
+    modal.style.display = "flex";
+
+    function handleClick(event) {
+        console.log(taskContainer);
+        taskContainer.firstElementChild.style.backgroundColor = event.target.id;
+        console.log(event.target.id);
     }
+
+    document.querySelectorAll('.change-color-modal-content > div').forEach(div => {
+        div.removeEventListener('click', div.handleClickRef);
+        div.handleClickRef = handleClick;
+        div.addEventListener('click', div.handleClickRef);
+    });
 }
 
 document.getElementById("modalBg").addEventListener("click", () => {
