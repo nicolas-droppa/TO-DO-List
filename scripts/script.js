@@ -232,9 +232,7 @@ function showColorModal(taskContainer) {
     modal.style.display = "flex";
 
     function handleClick(event) {
-        console.log(taskContainer);
         taskContainer.firstElementChild.style.backgroundColor = event.target.id;
-        console.log(event.target.id);
     }
 
     document.querySelectorAll('.change-color-modal-content > div').forEach(div => {
