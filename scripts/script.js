@@ -91,10 +91,39 @@ function deleteList(){
 }
 
 /**
- * Renames the task
+ * Renames the List
+ * @param {div} listContainer div representing the whole todo list
  */
-function renameTask(){
+function renameList(listContainer) {
+    const titleDiv = listContainer.querySelector(".list-title");
+    if (!titleDiv) return;
 
+    const MAX_CHARS = 12;
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = titleDiv.textContent.trim();
+    input.classList.add("list-title-input");
+
+    function saveTitle() {
+        const newTitle = input.value.trim() || "Untitled";
+        titleDiv.textContent = newTitle;
+        input.replaceWith(titleDiv);
+    }
+
+    input.addEventListener("blur", saveTitle);
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") input.blur();
+    });
+
+    input.addEventListener("input", () => {
+        if (input.value.length > MAX_CHARS) {
+            input.value = input.value.slice(0, MAX_CHARS);
+        }
+    });
+
+    titleDiv.replaceWith(input);
+    input.focus();
 }
 
 /**
@@ -213,6 +242,11 @@ document.addEventListener("click", function (event) {
 
         if (todoList)
             showColorModal(todoList);
+    } else if (event.target.closest("button#renameListButton")) {
+        const todoList = event.target.closest(".todo-list");
+
+        if (todoList)
+            renameList(todoList);
     }
 });
 
