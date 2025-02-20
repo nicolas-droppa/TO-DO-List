@@ -147,7 +147,7 @@ body {
 
 #changeListColorButton:hover i{
     cursor: pointer;
-    color: var(--red-color-hover);
+    color: var(--blue-color-hover);
 }
 
 .task-item {

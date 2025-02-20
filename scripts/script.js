@@ -32,6 +32,14 @@ function createList(listId){
     renameButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>';
     listRename.appendChild(renameButton);
 
+    const listColorChange = document.createElement("div");
+    listColorChange.classList.add("list-color-change");
+    const colorButton = document.createElement("button");
+    colorButton.id = "changeListColorButton";
+    colorButton.classList.add("edit-task-button");
+    colorButton.innerHTML = '<i class="fa-solid fa-brush"></i>';
+    listColorChange.appendChild(colorButton);
+
     const listRemove = document.createElement("div");
     listRemove.classList.add("list-remove");
     const removeButton = document.createElement("button");
@@ -45,6 +53,7 @@ function createList(listId){
 
     listHeader.appendChild(listTitle);
     listHeader.appendChild(listRename);
+    listHeader.appendChild(listColorChange);
     listHeader.appendChild(listRemove);
 
     listContent.appendChild(listHeader);
