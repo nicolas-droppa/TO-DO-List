@@ -1,3 +1,5 @@
+const data = [];
+
 /**
  * Saves data to local storage
  * @param 
@@ -15,5 +17,5 @@ export function loadFromLocalStorage() {
 }
 
 export function updateData() {
-    
+
 }
