@@ -1,11 +1,19 @@
-const data = [];
+const defaultList = {
+    id: 0,
+    name: "My todo-list",
+    color: "#ff3535",
+    tasks: [
+        { name: "Create todo-list", completed: true },
+        { name: "Make pizza", completed: false }
+    ]
+}
 
 /**
  * Saves data to local storage
  * @param 
  */
 export function saveToLocalStorage(data) {
-
+    localStorage.setItem("todoLists", JSON.stringify(data));
 }
 
 /**
@@ -13,9 +21,10 @@ export function saveToLocalStorage(data) {
  * @returns 
  */
 export function loadFromLocalStorage() {
-
+    const storedLists = localStorage.getItem("todoLists");
+    return storedLists ? JSON.parse(storedLists) : defaultList;
 }
-
-export function updateData() {
-
-}
+/*
+if (!localStorage.getItem("todoLists")) {
+    saveToLocalStorage(defaultList);
+}*/

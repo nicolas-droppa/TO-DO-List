@@ -1,4 +1,5 @@
 import { assignNewId, getStoredIds } from './listIdHandler.js';
+import { loadFromLocalStorage } from './storageSystem.js';
 
 /**
  * Creates new list
@@ -279,3 +280,7 @@ function showColorModal(taskContainer) {
 document.getElementById("modalBg").addEventListener("click", () => {
     hideColorModal();
 });
+
+let todoList = loadFromLocalStorage();
+
+console.log(todoList);
