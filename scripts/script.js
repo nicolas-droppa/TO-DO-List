@@ -1,6 +1,23 @@
 import { assignNewId, getStoredIds } from './listIdHandler.js';
 import { loadFromLocalStorage } from './storageSystem.js';
 
+let isMouseDown = false;
+let mouseDownTarget = null;
+
+document.addEventListener("mousedown", function (event) {
+    isMouseDown = true;
+    mouseDownTarget = event.target;
+});
+
+document.addEventListener("mouseup", function () {
+    isMouseDown = false;
+    mouseDownTarget = null;
+});
+
+let todoList = loadFromLocalStorage();
+
+console.log(todoList);
+
 /**
  * Creates new list
  * @param {int} listId id of new list
@@ -236,13 +253,16 @@ document.addEventListener("click", function (event) {
 
         if (todoList)
             addTask(todoList.id, todoList.querySelector(".list-tasks"));
+
     } else if (event.target.closest("button#createListButton")) {
         createList(assignNewId());
+
     } else if (event.target.closest("button#changeListColorButton")) {
         const todoList = event.target.closest(".todo-list");
 
         if (todoList)
             showColorModal(todoList);
+
     } else if (event.target.closest("button#renameListButton")) {
         const todoList = event.target.closest(".todo-list");
 
@@ -280,7 +300,3 @@ function showColorModal(taskContainer) {
 document.getElementById("modalBg").addEventListener("click", () => {
     hideColorModal();
 });
-
-let todoList = loadFromLocalStorage();
-
-console.log(todoList);
