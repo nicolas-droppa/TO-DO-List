@@ -3,15 +3,18 @@ import { loadFromLocalStorage } from './storageSystem.js';
 
 let isMouseDown = false;
 let mouseDownTarget = null;
+let mouseDownEvent = null;
 
 document.addEventListener("mousedown", function (event) {
     isMouseDown = true;
     mouseDownTarget = event.target;
+    mouseDownEvent = event;
 });
 
 document.addEventListener("mouseup", function () {
     isMouseDown = false;
     mouseDownTarget = null;
+    mouseDownEvent = null;
 });
 
 let todoList = loadFromLocalStorage();
@@ -268,6 +271,11 @@ document.addEventListener("click", function (event) {
 
         if (todoList)
             renameList(todoList);
+    } else if ( isMouseDown && mouseDownTarget && mouseDownTarget.closest(".todo-list") ) { //mouseDownTarget.PARENT.closest(".todo-list")
+        if (mouseDownEvent) {
+            console.log("X:", mouseDownEvent.clientX);
+            console.log("Y:", mouseDownEvent.clientY);
+        }
     }
 });
 
