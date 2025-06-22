@@ -48,6 +48,6 @@ function removeId(id) {
 /**
  * Resets all stored IDs (for debugging/testing purposes).
  */
-function resetIds() {
+export function resetIds() {
     saveIds([]);
 }

@@ -1,9 +1,12 @@
-import { assignNewId, getStoredIds } from './listIdHandler.js';
-import { loadFromLocalStorage, saveToLocalStorage } from './storageSystem.js';
+import { assignNewId, getStoredIds, resetIds } from './listIdHandler.js';
+import { loadFromLocalStorage, resetListStorage, saveToLocalStorage } from './storageSystem.js';
 
 let todoLists = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+    resetIds();
+    resetListStorage();
+    
     todoLists = loadFromLocalStorage();
 
     const listContainer = document.getElementById("listContainer");
@@ -142,9 +145,9 @@ function createList(listId){
     todoList.appendChild(listContent);
     todoList.appendChild(addTaskContainer);
 
-    console.log(listContainer);
+    //console.log(listContainer);
     listContainer.appendChild(todoList);
-    console.log(todoList);
+    //console.log(todoList);
     console.log(getStoredIds());
 
     todoLists.push({

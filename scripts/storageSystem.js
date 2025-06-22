@@ -34,3 +34,12 @@ export function loadFromLocalStorage() {
 if (!localStorage.getItem("todoLists")) {
     saveToLocalStorage(defaultList);
 }*/
+
+
+/**
+ * Loads data from local storage
+ * @returns 
+ */
+export function resetListStorage() {
+    localStorage.setItem("todoLists", JSON.stringify(defaultList));
+}
