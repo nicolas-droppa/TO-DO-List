@@ -1,12 +1,18 @@
 import { assignNewId, getStoredIds } from './listIdHandler.js';
 import { loadFromLocalStorage, saveToLocalStorage } from './storageSystem.js';
 
-let todoLists = loadFromLocalStorage();
+let todoLists = [];
 
-const listContainer = document.getElementById("listContainer");
+document.addEventListener("DOMContentLoaded", () => {
+    todoLists = loadFromLocalStorage();
 
-todoLists.forEach(list => {
-    createListFromData(list);
+    const listContainer = document.getElementById("listContainer");
+
+    console.log(todoList);
+
+    todoLists.forEach(list => {
+        createListFromData(list);
+    });
 });
 
 let isMouseDown = false;
