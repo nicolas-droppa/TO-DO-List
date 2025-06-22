@@ -1,5 +1,13 @@
 import { assignNewId, getStoredIds } from './listIdHandler.js';
-import { loadFromLocalStorage } from './storageSystem.js';
+import { loadFromLocalStorage, saveToLocalStorage } from './storageSystem.js';
+
+let todoLists = loadFromLocalStorage();
+
+const listContainer = document.getElementById("listContainer");
+
+todoLists.forEach(list => {
+    createListFromData(list);
+});
 
 let isMouseDown = false;
 let mouseDownTarget = null;
@@ -12,14 +20,44 @@ document.addEventListener("mousedown", function (event) {
 });
 
 document.addEventListener("mouseup", function () {
-    isMouseDown = false;
-    mouseDownTarget = null;
-    mouseDownEvent = null;
+    setTimeout(() => {
+        isMouseDown = false;
+        mouseDownTarget = null;
+        mouseDownEvent = null;
+    }, 100);
 });
 
 let todoList = loadFromLocalStorage();
 
 console.log(todoList);
+
+function createListFromData(listData) {
+    const id = listData.id;
+    createList(id);
+
+    const listElement = document.getElementById(`todoList${id}`);
+    const listTasks = listElement.querySelector(".list-tasks");
+    const titleElement = listElement.querySelector(".list-title");
+    const colorElement = listElement.querySelector(".list-color");
+
+    titleElement.textContent = listData.name;
+    colorElement.style.backgroundColor = listData.color;
+
+    listData.tasks.forEach(task => {
+        const taskDiv = document.createElement("div");
+        taskDiv.classList.add("task-item");
+        if (task.completed) taskDiv.classList.add("completed");
+
+        const taskText = document.createElement("span");
+        taskText.classList.add("task-text");
+        taskText.textContent = task.name;
+
+        // Add rest of task buttons as in addTask()
+
+        taskDiv.appendChild(taskText);
+        listTasks.appendChild(taskDiv);
+    });
+}
 
 /**
  * Creates new list
@@ -102,6 +140,15 @@ function createList(listId){
     listContainer.appendChild(todoList);
     console.log(todoList);
     console.log(getStoredIds());
+
+    todoLists.push({
+        id: listId,
+        name: "Untitled",
+        color: "#ffffff",
+        position: { x: 0, y: 0 },
+        tasks: []
+    });
+    saveToLocalStorage(todoLists);
 }
 
 /**
@@ -251,6 +298,11 @@ function addTask(listId, taskContainer) {
 }
 
 document.addEventListener("click", function (event) {
+    if (mouseDownTarget) {
+        console.log(mouseDownTarget.closest(".todo-list"));
+    } else {
+        console.log("mouseDownTarget is null");
+    }
     if (event.target.closest("button#addTaskButton")) {
         const todoList = event.target.closest(".todo-list");
 
@@ -271,7 +323,8 @@ document.addEventListener("click", function (event) {
 
         if (todoList)
             renameList(todoList);
-    } else if ( isMouseDown && mouseDownTarget && mouseDownTarget.closest(".todo-list") ) { //mouseDownTarget.PARENT.closest(".todo-list")
+    } else if ( isMouseDown && mouseDownTarget && mouseDownTarget.closest(".todo-list") ) {
+        console.log("Mouse is still held down on .todo-list element");
         if (mouseDownEvent) {
             console.log("X:", mouseDownEvent.clientX);
             console.log("Y:", mouseDownEvent.clientY);
