@@ -14,6 +14,15 @@
     --green-color: rgb(79, 255, 135);
     --green-color-hover: rgb(66, 206, 110);
     --box-shadow-color: #bbbbbb;
+
+    --ccm-color-red: #ff3535;
+    --ccm-color-orange: #ff9d35;
+    --ccm-color-yellow: #fffc35;
+    --ccm-color-green: #5dff35;
+    --ccm-color-cyan: #35ffff;
+    --ccm-color-blue: #3578ff;
+    --ccm-color-purple: #8d35ff;
+    --ccm-color-pink: #ff35d7;
 }
 
 .dark-mode {
@@ -52,6 +61,7 @@ body {
     width: 20rem;
     margin: .5rem;
     box-shadow: 1px 1px 6pX 0px var(--box-shadow-color);
+    user-select: none;
 }
 
 .list-content {
@@ -62,7 +72,7 @@ body {
 .list-color {
     height: 0.25rem;
     width: 100%;
-    background-color: red;
+    background-color: var(--ccm-color-red);
 }
 
 .list-header {

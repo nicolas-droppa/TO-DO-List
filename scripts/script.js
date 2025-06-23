@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const listContainer = document.getElementById("listContainer");
 
-    console.log(todoList);
+    console.log(todoLists);
 
     todoLists.forEach(list => {
         createListFromData(list);
@@ -36,13 +36,10 @@ document.addEventListener("mouseup", function () {
     }, 100);
 });
 
-let todoList = loadFromLocalStorage();
-
-console.log(todoList);
-
 function createListFromData(listData) {
+    console.log("create", listData);
     const id = listData.id;
-    createList(id);
+    createList(listData);
 
     const listElement = document.getElementById(`todoList${id}`);
     const listTasks = listElement.querySelector(".list-tasks");
@@ -70,17 +67,18 @@ function createListFromData(listData) {
 
 /**
  * Creates new list
- * @param {int} listId id of new list
+ * @param {int} listData list
  */
-function createList(listId){
+function createList(listData){
     const listContainer = document.getElementById("listContainer");
 
     const todoList = document.createElement("div");
-    todoList.id = `todoList${listId}`;
+    todoList.id = `todoList${listData.id}`;
     todoList.classList.add("todo-list");
 
     const listColor = document.createElement("div");
     listColor.classList.add("list-color");
+    listColor.style.backgroundColor = `${listData.color}`;
 
     const listContent = document.createElement("div");
     listContent.classList.add("list-content");
@@ -90,7 +88,7 @@ function createList(listId){
 
     const listTitle = document.createElement("div");
     listTitle.classList.add("list-title");
-    listTitle.textContent = "Title";
+    listTitle.textContent = `${listData.name}awdawd`; //not working that change name 
 
     const listRename = document.createElement("div");
     listRename.classList.add("list-rename");
@@ -148,14 +146,22 @@ function createList(listId){
     //console.log(listContainer);
     listContainer.appendChild(todoList);
     //console.log(todoList);
-    console.log(getStoredIds());
+    //console.log(getStoredIds());
+
+    let taskArray = [];
+
+    listData.tasks.forEach(element => {
+        taskArray.push({ name: element.name, completed: element.completed });
+    });
+
+    //console.log("tasks: ", taskArray);
 
     todoLists.push({
-        id: listId,
-        name: "Untitled",
-        color: "#ffffff",
-        position: { x: 0, y: 0 },
-        tasks: []
+        id: listData.id,
+        name: listData.name,
+        color: listData.color,
+        position: { x: listData.position.x, y: listData.position.y },
+        tasks: taskArray
     });
     saveToLocalStorage(todoLists);
 }
