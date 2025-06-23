@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const listContainer = document.getElementById("listContainer");
 
-    console.log(todoLists);
+    //console.log(todoLists);
 
     todoLists.forEach(list => {
         createListFromData(list);
@@ -43,25 +43,10 @@ function createListFromData(listData) {
 
     const listElement = document.getElementById(`todoList${id}`);
     const listTasks = listElement.querySelector(".list-tasks");
-    const titleElement = listElement.querySelector(".list-title");
-    const colorElement = listElement.querySelector(".list-color");
 
-    titleElement.textContent = listData.name;
-    colorElement.style.backgroundColor = listData.color;
-
-    listData.tasks.forEach(task => {
-        const taskDiv = document.createElement("div");
-        taskDiv.classList.add("task-item");
-        if (task.completed) taskDiv.classList.add("completed");
-
-        const taskText = document.createElement("span");
-        taskText.classList.add("task-text");
-        taskText.textContent = task.name;
-
-        // Add rest of task buttons as in addTask()
-
-        taskDiv.appendChild(taskText);
-        listTasks.appendChild(taskDiv);
+    listData.tasks.forEach(taskData => {
+        const taskElement = createTaskElement(taskData);
+        listTasks.appendChild(taskElement);
     });
 }
 
@@ -88,7 +73,7 @@ function createList(listData){
 
     const listTitle = document.createElement("div");
     listTitle.classList.add("list-title");
-    listTitle.textContent = `${listData.name}awdawd`; //not working that change name 
+    listTitle.textContent = `${listData.name}`;
 
     const listRename = document.createElement("div");
     listRename.classList.add("list-rename");
@@ -164,6 +149,8 @@ function createList(listData){
         tasks: taskArray
     });
     saveToLocalStorage(todoLists);
+
+    console.log(todoList);
 }
 
 /**
@@ -224,54 +211,8 @@ function addTask(listId, taskContainer) {
 
     function saveTask() {
         if (input.value.trim() !== "") {
-            const task = document.createElement("div");
-            task.classList.add("task-item");
-
-            const taskText = document.createElement("span");
-            taskText.textContent = input.value;
-            taskText.classList.add("task-text");
-
-            const renameButton = document.createElement("button");
-            renameButton.innerHTML = '<i class="fa-solid fa-pen"></i>';
-            renameButton.classList.add("single-task-button");
-            renameButton.id = 'renameTaskButton';
-            renameButton.addEventListener("click", () => renameTask(taskText));
-
-            const completeButton = document.createElement("button");
-            completeButton.innerHTML = '<i class="fa-regular fa-square"></i>';
-            completeButton.classList.add("single-task-button");
-            completeButton.id = 'completeTaskButton';
-
-            completeButton.addEventListener("click", () => {
-                task.classList.toggle("completed");
-
-                const icon = completeButton.querySelector("i");
-                const text = task.querySelector("span");
-                if (task.classList.contains("completed")) {
-                    icon.classList.replace("fa-square", "fa-square-check");
-                    icon.style.color = "var(--blue-color)";
-                    text.style.color = "var(--bg-color-complement)";
-                    text.style.textDecoration = "line-through";
-                } else {
-                    icon.classList.replace("fa-square-check", "fa-square");
-                    icon.style.color = "var(--bg-color-complement)";
-                    text.style.color = "var(--text-color)";
-                    text.style.textDecoration = "none";
-                }
-            });
-
-            const deleteButton = document.createElement("button");
-            deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
-            deleteButton.classList.add("single-task-button");
-            deleteButton.id = 'deleteTaskButton';
-            deleteButton.addEventListener("click", () => task.remove());
-
-            task.appendChild(completeButton);
-            task.appendChild(taskText);
-            task.appendChild(renameButton);
-            task.appendChild(deleteButton);
-
-            taskContainer.appendChild(task);
+            const newTask = createTaskElement({ name: input.value, completed: false });
+            taskContainer.appendChild(newTask);
         }
 
         input.removeEventListener("keypress", onEnterPress);
@@ -310,6 +251,70 @@ function addTask(listId, taskContainer) {
         taskContainer.appendChild(input);
         input.focus();
     }
+}
+
+function createTaskElement(taskData) {
+    const task = document.createElement("div");
+    task.classList.add("task-item");
+    if (taskData.completed) task.classList.add("completed");
+
+    const taskText = document.createElement("span");
+    taskText.textContent = taskData.name;
+    taskText.classList.add("task-text");
+    taskText.style.color = task.classList.contains("completed")
+        ? "var(--bg-color-complement)"
+        : "var(--text-color)";
+    taskText.style.textDecoration = task.classList.contains("completed")
+        ? "line-through"
+        : "none";
+
+    const renameButton = document.createElement("button");
+    renameButton.innerHTML = '<i class="fa-solid fa-pen"></i>';
+    renameButton.classList.add("single-task-button");
+    renameButton.id = 'renameTaskButton';
+    renameButton.addEventListener("click", () => renameTask(taskText));
+
+    const completeButton = document.createElement("button");
+    completeButton.innerHTML = task.classList.contains("completed")
+        ? '<i class="fa-regular fa-square-check"></i>'
+        : '<i class="fa-regular fa-square"></i>';
+    completeButton.querySelector("i").style.color = task.classList.contains("completed") 
+        ? "var(--blue-color)"
+        : "var(--bg-color-complement)";
+    completeButton.classList.add("single-task-button"); //cross text if completed and grayout
+    completeButton.id = 'completeTaskButton';
+
+    completeButton.addEventListener("click", () => {
+        task.classList.toggle("completed");
+
+        const icon = completeButton.querySelector("i");
+        console.log("icon: ", icon);
+        const text = task.querySelector("span");
+        if (task.classList.contains("completed")) {
+            icon.classList.replace("fa-square", "fa-square-check");
+            icon.style.color = "var(--blue-color)";
+            text.style.color = "var(--bg-color-complement)";
+            text.style.textDecoration = "line-through";
+        } else {
+            icon.classList.replace("fa-square-check", "fa-square");
+            icon.style.color = "var(--bg-color-complement)";
+            text.style.color = "var(--text-color)";
+            text.style.textDecoration = "none";
+        }
+    });
+
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    deleteButton.classList.add("single-task-button");
+    deleteButton.id = 'deleteTaskButton';
+    deleteButton.addEventListener("click", () => task.remove());
+
+    task.appendChild(completeButton);
+    task.appendChild(taskText);
+    task.appendChild(renameButton);
+    task.appendChild(deleteButton);
+
+    return task;
 }
 
 document.addEventListener("click", function (event) {
