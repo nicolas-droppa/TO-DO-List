@@ -154,6 +154,45 @@ function createList(listData){
 }
 
 /**
+ * Renames the Task
+ * @param {div} taskText text to be changed
+ */
+function renameTask(taskText) {
+    console.log(taskText);
+    const MAX_CHARS = 18;
+    const originalText = taskText.textContent.trim();
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = taskText.textContent.trim();
+    input.classList.add("task-input");
+
+    function saveTask() {
+        const newTask = input.value.trim() || "Untitled";
+        if (newTask == "Untitled")
+            taskText.textContent = originalText;
+        else
+            taskText.textContent = newTask;
+
+        input.replaceWith(taskText);
+    }
+
+    input.addEventListener("blur", saveTask);
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") input.blur();
+    });
+
+    input.addEventListener("input", () => {
+        if (input.value.length > MAX_CHARS) {
+            input.value = input.value.slice(0, MAX_CHARS);
+        }
+    });
+
+    taskText.replaceWith(input);
+    input.focus();
+}
+
+/**
  * Deletes list
  */
 function deleteList(){
