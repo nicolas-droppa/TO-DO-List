@@ -3,6 +3,11 @@ import { loadFromLocalStorage, resetListStorage, saveToLocalStorage } from './st
 
 let todoLists = [];
 
+let isDragging = false;
+let dragTarget = null;
+let offsetX = 0;
+let offsetY = 0;
+
 const createListTemplate =
     {
         id: 0,
@@ -31,22 +36,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-let isMouseDown = false;
-let mouseDownTarget = null;
-let mouseDownEvent = null;
-
 document.addEventListener("mousedown", function (event) {
-    isMouseDown = true;
-    mouseDownTarget = event.target;
-    mouseDownEvent = event;
+    const list = event.target.closest(".todo-list");
+    if (list && !event.target.closest("button")) {
+        isDragging = true;
+        dragTarget = list;
+        offsetX = event.clientX - list.offsetLeft;
+        offsetY = event.clientY - list.offsetTop;
+        list.style.cursor = "grabbing";
+    }
+});
+
+document.addEventListener("mousemove", function (event) {
+    if (isDragging && dragTarget) {
+        const container = document.getElementById("listContainer");
+        const containerRect = container.getBoundingClientRect();
+
+        let x = event.clientX - offsetX - containerRect.left;
+        let y = event.clientY - offsetY - containerRect.top;
+
+        x = Math.max(0, Math.min(container.clientWidth - dragTarget.offsetWidth, x));
+        y = Math.max(0, Math.min(container.clientHeight - dragTarget.offsetHeight, y));
+
+        dragTarget.style.left = `${x}px`;
+        dragTarget.style.top = `${y}px`;
+    }
 });
 
 document.addEventListener("mouseup", function () {
-    setTimeout(() => {
-        isMouseDown = false;
-        mouseDownTarget = null;
-        mouseDownEvent = null;
-    }, 100);
+    if (dragTarget) dragTarget.style.cursor = "grab";
+    isDragging = false;
+    dragTarget = null;
 });
 
 function createListFromData(listData) {
@@ -342,7 +362,6 @@ function createTaskElement(taskData) {
         task.classList.toggle("completed");
 
         const icon = completeButton.querySelector("i");
-        console.log("icon: ", icon);
         const text = task.querySelector("span");
         if (task.classList.contains("completed")) {
             icon.classList.replace("fa-square", "fa-square-check");
@@ -372,11 +391,6 @@ function createTaskElement(taskData) {
 }
 
 document.addEventListener("click", function (event) {
-    if (mouseDownTarget) {
-        console.log(mouseDownTarget.closest(".todo-list"));
-    } else {
-        console.log("mouseDownTarget is null");
-    }
     if (event.target.closest("button#addTaskButton")) {
         const todoList = event.target.closest(".todo-list");
 
@@ -397,12 +411,6 @@ document.addEventListener("click", function (event) {
 
         if (todoList)
             renameList(todoList);
-    } else if ( isMouseDown && mouseDownTarget && mouseDownTarget.closest(".todo-list") ) {
-        console.log("Mouse is still held down on .todo-list element");
-        if (mouseDownEvent) {
-            console.log("X:", mouseDownEvent.clientX);
-            console.log("Y:", mouseDownEvent.clientY);
-        }
     }
 });
 
