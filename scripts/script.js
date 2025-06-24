@@ -3,6 +3,19 @@ import { loadFromLocalStorage, resetListStorage, saveToLocalStorage } from './st
 
 let todoLists = [];
 
+const createListTemplate =
+    {
+        id: 0,
+        name: "Untitled",
+        color: "#ff3535",
+        position: {
+            x: 0,
+            y: 0
+        },
+        tasks: []
+    }
+;
+
 document.addEventListener("DOMContentLoaded", () => {
     resetIds();
     resetListStorage();
@@ -135,9 +148,11 @@ function createList(listData){
 
     let taskArray = [];
 
-    listData.tasks.forEach(element => {
-        taskArray.push({ name: element.name, completed: element.completed });
-    });
+    if (Array.isArray(listData.tasks)) {
+        listData.tasks.forEach(element => {
+            taskArray.push({ name: element.name, completed: element.completed });
+        });
+    }
 
     //console.log("tasks: ", taskArray);
 
@@ -145,7 +160,7 @@ function createList(listData){
         id: listData.id,
         name: listData.name,
         color: listData.color,
-        position: { x: listData.position.x, y: listData.position.y },
+        position: { x: listData.position.x || 0, y: listData.position.y || 0 },
         tasks: taskArray
     });
     saveToLocalStorage(todoLists);
@@ -320,7 +335,7 @@ function createTaskElement(taskData) {
     completeButton.querySelector("i").style.color = task.classList.contains("completed") 
         ? "var(--blue-color)"
         : "var(--bg-color-complement)";
-    completeButton.classList.add("single-task-button"); //cross text if completed and grayout
+    completeButton.classList.add("single-task-button");
     completeButton.id = 'completeTaskButton';
 
     completeButton.addEventListener("click", () => {
@@ -369,7 +384,7 @@ document.addEventListener("click", function (event) {
             addTask(todoList.id, todoList.querySelector(".list-tasks"));
 
     } else if (event.target.closest("button#createListButton")) {
-        createList(assignNewId());
+        createList(createListTemplate);
 
     } else if (event.target.closest("button#changeListColorButton")) {
         const todoList = event.target.closest(".todo-list");
