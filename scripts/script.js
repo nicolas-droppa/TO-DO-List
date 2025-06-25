@@ -64,7 +64,13 @@ document.addEventListener("mousemove", function (event) {
 });
 
 document.addEventListener("mouseup", function () {
-    if (dragTarget) dragTarget.style.cursor = "grab";
+    if (dragTarget) {
+        dragTarget.style.cursor = "grab";
+        console.log("left: ", dragTarget.style.left);
+        console.log("top: ", dragTarget.style.top);
+        let id = parseInt(dragTarget.id.replace("todoList", ""));
+        console.log(id);
+    }
     isDragging = false;
     dragTarget = null;
 });
