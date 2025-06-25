@@ -175,9 +175,6 @@ function createListElement(listData) {
  * Handles creating list after button press
  */
 function handleCreateList() {
-    //const newId = assignNewId();
-    const newId = 0;
-
     const newListData = createListTemplate;
 
     newListData.id = assignNewId();
@@ -255,7 +252,10 @@ function deleteList(){
  */
 function renameList(listContainer) {
     const titleDiv = listContainer.querySelector(".list-title");
-    if (!titleDiv) return;
+    if (!titleDiv) 
+        return;
+
+    let id = parseInt(titleDiv.parentElement.parentElement.parentElement.id.replace("todoList", ""));
 
     const MAX_CHARS = MAX_TITLE_CHARS;
 
@@ -268,6 +268,15 @@ function renameList(listContainer) {
         const newTitle = input.value.trim() || "Untitled";
         titleDiv.textContent = newTitle;
         input.replaceWith(titleDiv);
+
+        let targetList = todoLists.find(list => list.id === id);
+
+        if (targetList) {
+            targetList.name = newTitle;
+            saveToLocalStorage(todoLists);
+        } else {
+            console.log("List not found!");
+        }
     }
 
     input.addEventListener("blur", saveTitle);
