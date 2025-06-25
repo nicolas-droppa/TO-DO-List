@@ -23,7 +23,7 @@ const createListTemplate =
 
 document.addEventListener("DOMContentLoaded", () => {
     resetIds();
-    resetListStorage();
+    //resetListStorage();
     
     todoLists = loadFromLocalStorage();
 
@@ -66,43 +66,42 @@ document.addEventListener("mousemove", function (event) {
 document.addEventListener("mouseup", function () {
     if (dragTarget) {
         dragTarget.style.cursor = "grab";
+
         console.log("left: ", dragTarget.style.left);
         console.log("top: ", dragTarget.style.top);
         let id = parseInt(dragTarget.id.replace("todoList", ""));
         console.log(id);
+
+        let targetList = todoLists.find(list => list.id === id);
+
+        if (targetList) {
+            targetList.position.x = parseInt(dragTarget.style.left);
+            targetList.position.y = parseInt(dragTarget.style.top);
+            saveToLocalStorage(todoLists);
+        } else {
+            console.log("List not found!");
+        }
     }
     isDragging = false;
     dragTarget = null;
 });
 
-function createListFromData(listData) {
-    console.log("create", listData);
-    const id = listData.id;
-    createList(listData);
-
-    const listElement = document.getElementById(`todoList${id}`);
-    const listTasks = listElement.querySelector(".list-tasks");
-
-    listData.tasks.forEach(taskData => {
-        const taskElement = createTaskElement(taskData);
-        listTasks.appendChild(taskElement);
-    });
-}
-
 /**
- * Creates new list
+ * Creates new list from data --not saving
  * @param {int} listData list
  */
-function createList(listData){
+function createListElement(listData) {
     const listContainer = document.getElementById("listContainer");
 
     const todoList = document.createElement("div");
     todoList.id = `todoList${listData.id}`;
     todoList.classList.add("todo-list");
+    todoList.style.left = listData.position.x + "px";
+    todoList.style.top = listData.position.y + "px";
 
     const listColor = document.createElement("div");
     listColor.classList.add("list-color");
-    listColor.style.backgroundColor = `${listData.color}`;
+    listColor.style.backgroundColor = listData.color;
 
     const listContent = document.createElement("div");
     listContent.classList.add("list-content");
@@ -112,7 +111,7 @@ function createList(listData){
 
     const listTitle = document.createElement("div");
     listTitle.classList.add("list-title");
-    listTitle.textContent = `${listData.name}`;
+    listTitle.textContent = listData.name;
 
     const listRename = document.createElement("div");
     listRename.classList.add("list-rename");
@@ -167,31 +166,37 @@ function createList(listData){
     todoList.appendChild(listContent);
     todoList.appendChild(addTaskContainer);
 
-    //console.log(listContainer);
     listContainer.appendChild(todoList);
-    //console.log(todoList);
-    //console.log(getStoredIds());
+}
 
-    let taskArray = [];
+/**
+ * Handles creating list after button press
+ */
+function handleCreateList() {
+    //const newId = assignNewId();
+    const newId = 0;
 
-    if (Array.isArray(listData.tasks)) {
-        listData.tasks.forEach(element => {
-            taskArray.push({ name: element.name, completed: element.completed });
-        });
-    }
+    const newListData = createListTemplate;
 
-    //console.log("tasks: ", taskArray);
-
-    todoLists.push({
-        id: listData.id,
-        name: listData.name,
-        color: listData.color,
-        position: { x: listData.position.x || 0, y: listData.position.y || 0 },
-        tasks: taskArray
-    });
+    todoLists.push(newListData);
     saveToLocalStorage(todoLists);
+    createListElement(newListData);
+}
 
-    console.log(todoList);
+/**
+ * Creates new list --saving included
+ * @param {int} listData list
+ */
+function createListFromData(listData) {
+    createListElement(listData);
+
+    const listElement = document.getElementById(`todoList${listData.id}`);
+    const listTasks = listElement.querySelector(".list-tasks");
+
+    listData.tasks.forEach(taskData => {
+        const taskElement = createTaskElement(taskData);
+        listTasks.appendChild(taskElement);
+    });
 }
 
 /**
@@ -404,7 +409,7 @@ document.addEventListener("click", function (event) {
             addTask(todoList.id, todoList.querySelector(".list-tasks"));
 
     } else if (event.target.closest("button#createListButton")) {
-        createList(createListTemplate);
+        handleCreateList(createListTemplate);
 
     } else if (event.target.closest("button#changeListColorButton")) {
         const todoList = event.target.closest(".todo-list");
