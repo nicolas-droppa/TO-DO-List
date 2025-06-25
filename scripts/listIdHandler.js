@@ -12,7 +12,7 @@ export function getStoredIds() {
  * Saves the list IDs to localStorage.
  * @param {number[]} idList Array of IDs to save
  */
-function saveIds(idList) {
+export function saveIds(idList) {
     localStorage.setItem(CURRENT_LIST_ID_STORAGE_KEY, JSON.stringify(idList));
 }
 
@@ -23,6 +23,8 @@ function saveIds(idList) {
 export function assignNewId() {
     let idList = getStoredIds();
 
+    console.log("STORED IDs: ", idList);
+
     if (idList.length >= MAX_LISTS) {
         return null;
     }
@@ -31,6 +33,7 @@ export function assignNewId() {
         if (!idList.includes(i)) {
             idList.push(i);
             saveIds(idList);
+            console.log("ID on assign: ", i);
             return i;
         }
     }

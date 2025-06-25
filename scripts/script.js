@@ -23,7 +23,7 @@ const createListTemplate =
 ;
 
 document.addEventListener("DOMContentLoaded", () => {
-    resetIds();
+    //resetIds();
     //resetListStorage();
     
     todoLists = loadFromLocalStorage();
@@ -92,6 +92,7 @@ document.addEventListener("mouseup", function () {
  * @param {int} listData list
  */
 function createListElement(listData) {
+    console.log("CREATE LIST --ns: ", listData);
     const listContainer = document.getElementById("listContainer");
 
     const todoList = document.createElement("div");
@@ -178,6 +179,8 @@ function handleCreateList() {
     const newId = 0;
 
     const newListData = createListTemplate;
+
+    newListData.id = assignNewId();
 
     todoLists.push(newListData);
     saveToLocalStorage(todoLists);
@@ -410,7 +413,7 @@ document.addEventListener("click", function (event) {
             addTask(todoList.id, todoList.querySelector(".list-tasks"));
 
     } else if (event.target.closest("button#createListButton")) {
-        handleCreateList(createListTemplate);
+        handleCreateList();
 
     } else if (event.target.closest("button#changeListColorButton")) {
         const todoList = event.target.closest(".todo-list");
