@@ -1,6 +1,6 @@
-import { assignNewId, getStoredIds, resetIds } from './listIdHandler.js';
+import { assignNewId, getStoredIds, resetIds, removeId } from './listIdHandler.js';
 import { loadFromLocalStorage, resetListStorage, saveToLocalStorage } from './storageSystem.js';
-import { MAX_TITLE_CHARS, MAX_TASK_CHARS } from './constants.js';
+import { MAX_TITLE_CHARS, MAX_TASK_CHARS, RESET_APP } from './constants.js';
 
 let todoLists = [];
 
@@ -23,8 +23,10 @@ const createListTemplate =
 ;
 
 document.addEventListener("DOMContentLoaded", () => {
-    //resetIds();
-    //resetListStorage();
+    if (RESET_APP == 0) {
+        resetIds();
+        resetListStorage();
+    }
     
     todoLists = loadFromLocalStorage();
 
@@ -179,9 +181,13 @@ function handleCreateList() {
 
     newListData.id = assignNewId();
 
+    console.log("new ID: ", newListData.id);
+
     todoLists.push(newListData);
     saveToLocalStorage(todoLists);
     createListElement(newListData);
+
+    console.log("AFTER CREATE TLs: ", todoLists);
 }
 
 /**
@@ -191,6 +197,8 @@ function handleCreateList() {
 function createListFromData(listData) {
     createListElement(listData);
 
+    console.log("LD", listData);
+
     const listElement = document.getElementById(`todoList${listData.id}`);
     const listTasks = listElement.querySelector(".list-tasks");
 
@@ -198,6 +206,8 @@ function createListFromData(listData) {
         const taskElement = createTaskElement(taskData);
         listTasks.appendChild(taskElement);
     });
+
+    console.log("AFTER LOAD TLs: ", todoLists);
 }
 
 /**
@@ -242,8 +252,24 @@ function renameTask(taskText) {
 /**
  * Deletes list
  */
-function deleteList(){
+function deleteList(list){
+    console.log("del: ", list);
+    let id = parseInt(list.id.replace("todoList", ""));
 
+    let targetList = todoLists.find(list => list.id === id);
+
+    if (targetList) {
+        console.log("ID: ", id);
+        console.log("B-IDs: ", getStoredIds());
+        console.log("B-TLs: ", todoLists);
+        todoLists.pop(targetList);
+        removeId(id);
+        console.log("A-IDs: ", getStoredIds());
+        console.log("A-TLs: ", todoLists);
+        saveToLocalStorage(todoLists);
+    } else {
+        console.log("List not found!");
+    }
 }
 
 /**
@@ -423,6 +449,9 @@ document.addEventListener("click", function (event) {
 
     } else if (event.target.closest("button#createListButton")) {
         handleCreateList();
+    
+    } else if (event.target.closest("button#removeListButton")) {
+        deleteList(event.target.closest(".todo-list"));
 
     } else if (event.target.closest("button#changeListColorButton")) {
         const todoList = event.target.closest(".todo-list");

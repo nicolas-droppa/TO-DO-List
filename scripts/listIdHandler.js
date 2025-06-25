@@ -43,7 +43,7 @@ export function assignNewId() {
  * Removes an ID from the list, allowing it to be reused.
  * @param {number} id ID to remove
  */
-function removeId(id) {
+export function removeId(id) {
     let idList = getStoredIds().filter(existingId => existingId !== id);
     saveIds(idList);
 }
