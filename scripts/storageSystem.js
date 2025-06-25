@@ -28,8 +28,8 @@ export function saveToLocalStorage(data) {
  */
 export function loadFromLocalStorage() {
     const storedLists = localStorage.getItem("todoLists");
-    console.log("stored", JSON.parse(storedLists));
-    console.log("return", storedLists ? JSON.parse(storedLists) : defaultList);
+    //console.log("stored", JSON.parse(storedLists));
+    //console.log("return", storedLists ? JSON.parse(storedLists) : defaultList);
     return storedLists ? JSON.parse(storedLists) : defaultList;
 }
 /*

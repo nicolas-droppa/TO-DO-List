@@ -1,5 +1,6 @@
 import { assignNewId, getStoredIds, resetIds } from './listIdHandler.js';
 import { loadFromLocalStorage, resetListStorage, saveToLocalStorage } from './storageSystem.js';
+import { MAX_TITLE_CHARS, MAX_TASK_CHARS } from './constants.js';
 
 let todoLists = [];
 
@@ -67,10 +68,10 @@ document.addEventListener("mouseup", function () {
     if (dragTarget) {
         dragTarget.style.cursor = "grab";
 
-        console.log("left: ", dragTarget.style.left);
-        console.log("top: ", dragTarget.style.top);
+        //console.log("left: ", dragTarget.style.left);
+        //console.log("top: ", dragTarget.style.top);
         let id = parseInt(dragTarget.id.replace("todoList", ""));
-        console.log(id);
+        //console.log(id);
 
         let targetList = todoLists.find(list => list.id === id);
 
@@ -204,8 +205,8 @@ function createListFromData(listData) {
  * @param {div} taskText text to be changed
  */
 function renameTask(taskText) {
-    console.log(taskText);
-    const MAX_CHARS = 18;
+    //console.log(taskText);
+    const MAX_CHARS = MAX_TASK_CHARS;
     const originalText = taskText.textContent.trim();
 
     const input = document.createElement("input");
@@ -253,7 +254,7 @@ function renameList(listContainer) {
     const titleDiv = listContainer.querySelector(".list-title");
     if (!titleDiv) return;
 
-    const MAX_CHARS = 12;
+    const MAX_CHARS = MAX_TITLE_CHARS;
 
     const input = document.createElement("input");
     input.type = "text";
@@ -292,7 +293,7 @@ function addTask(listId, taskContainer) {
     input.placeholder = "Enter task name...";
     input.classList.add("task-input");
 
-    const MAX_CHARS = 18;
+    const MAX_CHARS = MAX_TASK_CHARS;
 
     function saveTask() {
         if (input.value.trim() !== "") {
