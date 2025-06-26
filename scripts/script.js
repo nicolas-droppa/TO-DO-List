@@ -177,7 +177,7 @@ function createListElement(listData) {
  * Handles creating list after button press
  */
 function handleCreateList() {
-    const newListData = createListTemplate;
+    const newListData = JSON.parse(JSON.stringify(createListTemplate));
 
     newListData.id = assignNewId();
 
