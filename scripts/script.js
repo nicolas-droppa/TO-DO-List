@@ -181,6 +181,11 @@ function handleCreateList() {
 
     newListData.id = assignNewId();
 
+    if (!newListData.id) {
+        console.log("Maximum number of lists reached!");
+        return;
+    }
+
     console.log("new ID: ", newListData.id);
 
     todoLists.push(newListData);
@@ -252,17 +257,19 @@ function renameTask(taskText) {
 /**
  * Deletes list
  */
-function deleteList(list){
+function deleteList(list) {
     console.log("del: ", list);
     let id = parseInt(list.id.replace("todoList", ""));
 
-    let targetList = todoLists.find(list => list.id === id);
+    let index = todoLists.findIndex(l => l.id === id);
 
-    if (targetList) {
+    if (index !== -1) {
         console.log("ID: ", id);
         console.log("B-IDs: ", getStoredIds());
         console.log("B-TLs: ", todoLists);
-        todoLists.pop(targetList);
+
+        todoLists.splice(index, 1);
+
         removeId(id);
         console.log("A-IDs: ", getStoredIds());
         console.log("A-TLs: ", todoLists);
