@@ -94,14 +94,20 @@ document.addEventListener("mouseup", function () {
  * @param {int} listData list
  */
 function createListElement(listData) {
+    const { width, height } = getWindowSize();
+    const safeMargin = 50;
+
+    const posX = Math.min(Math.max(listData.position.x, 0), width - safeMargin);
+    const posY = Math.min(Math.max(listData.position.y, 0), height - safeMargin);
+
     console.log("CREATE LIST --ns: ", listData);
     const listContainer = document.getElementById("listContainer");
 
     const todoList = document.createElement("div");
     todoList.id = `todoList${listData.id}`;
     todoList.classList.add("todo-list");
-    todoList.style.left = listData.position.x + "px";
-    todoList.style.top = listData.position.y + "px";
+    todoList.style.left = `${posX}px`;
+    todoList.style.top = `${posY}px`;
 
     const listColor = document.createElement("div");
     listColor.classList.add("list-color");
@@ -503,3 +509,10 @@ function showColorModal(taskContainer) {
 document.getElementById("modalBg").addEventListener("click", () => {
     hideColorModal();
 });
+
+function getWindowSize() {
+    return {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+}
