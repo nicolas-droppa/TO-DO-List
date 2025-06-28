@@ -344,12 +344,25 @@ function addTask(listId, taskContainer) {
     input.placeholder = "Enter task name...";
     input.classList.add("task-input");
 
+    let id = parseInt(taskContainer.parentElement.parentElement.id.replace("todoList", ""));
+    //console.log(id);
+
     const MAX_CHARS = MAX_TASK_CHARS;
 
     function saveTask() {
         if (input.value.trim() !== "") {
             const newTask = createTaskElement({ name: input.value, completed: false });
             taskContainer.appendChild(newTask);
+            
+            let targetList = todoLists.find(list => list.id === id);
+            if (targetList) {
+                targetList.tasks.push({
+                    name: input.value.trim(),
+                    completed: false
+                });
+
+                saveToLocalStorage(todoLists);
+            }
         }
 
         input.removeEventListener("keypress", onEnterPress);
