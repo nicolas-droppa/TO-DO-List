@@ -456,7 +456,18 @@ function createTaskElement(taskData) {
     deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
     deleteButton.classList.add("single-task-button");
     deleteButton.id = 'deleteTaskButton';
-    deleteButton.addEventListener("click", () => task.remove());
+    deleteButton.addEventListener("click", () => {
+        let id = parseInt(task.parentElement.parentElement.parentElement.id.replace("todoList", ""));
+
+        task.remove();
+
+        const targetList = todoLists.find(list => list.id === id);
+        if (targetList) {
+            targetList.tasks = targetList.tasks.filter(t => t.name !== taskText.textContent);
+
+            saveToLocalStorage(todoLists);
+        }
+    });
 
     task.appendChild(completeButton);
     task.appendChild(taskText);
