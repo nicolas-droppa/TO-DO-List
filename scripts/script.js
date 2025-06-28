@@ -264,21 +264,18 @@ function renameTask(taskText) {
  * Deletes list
  */
 function deleteList(list) {
-    console.log("del: ", list);
     let id = parseInt(list.id.replace("todoList", ""));
 
     let index = todoLists.findIndex(l => l.id === id);
 
     if (index !== -1) {
-        console.log("ID: ", id);
-        console.log("B-IDs: ", getStoredIds());
-        console.log("B-TLs: ", todoLists);
-
         todoLists.splice(index, 1);
-
         removeId(id);
-        console.log("A-IDs: ", getStoredIds());
-        console.log("A-TLs: ", todoLists);
+
+        const listElement = document.getElementById(`todoList${id}`);
+        if (listElement)
+            listElement.remove();
+
         saveToLocalStorage(todoLists);
     } else {
         console.log("List not found!");
