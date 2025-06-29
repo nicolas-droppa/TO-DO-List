@@ -436,7 +436,9 @@ function createTaskElement(taskData) {
 
         const icon = completeButton.querySelector("i");
         const text = task.querySelector("span");
-        if (task.classList.contains("completed")) {
+        const isCompleted = task.classList.contains("completed");
+
+        if (isCompleted) {
             icon.classList.replace("fa-square", "fa-square-check");
             icon.style.color = "var(--blue-color)";
             text.style.color = "var(--bg-color-complement)";
@@ -446,6 +448,19 @@ function createTaskElement(taskData) {
             icon.style.color = "var(--bg-color-complement)";
             text.style.color = "var(--text-color)";
             text.style.textDecoration = "none";
+        }
+
+        const id = parseInt(task.closest(".todo-list").id.replace("todoList", ""));
+        const targetList = todoLists.find(list => list.id === id);
+
+        if (targetList) {
+            const taskName = text.textContent.trim();
+            const targetTask = targetList.tasks.find(t => t.name === taskName);
+
+            if (targetTask) {
+                targetTask.completed = isCompleted;
+                saveToLocalStorage(todoLists);
+            }
         }
     });
 
@@ -517,7 +532,17 @@ function showColorModal(taskContainer) {
     modal.style.display = "flex";
 
     function handleClick(event) {
-        taskContainer.firstElementChild.style.backgroundColor = event.target.id;
+        const newColor = event.target.id;
+
+        taskContainer.firstElementChild.style.backgroundColor = newColor;
+
+        const id = parseInt(taskContainer.id.replace("todoList", ""));
+        const targetList = todoLists.find(list => list.id === id);
+
+        if (targetList) {
+            targetList.color = newColor;
+            saveToLocalStorage(todoLists);
+        }
     }
 
     document.querySelectorAll('.change-color-modal-content > div').forEach(div => {
