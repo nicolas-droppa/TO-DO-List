@@ -235,14 +235,22 @@ function renameTask(taskText) {
     input.value = taskText.textContent.trim();
     input.classList.add("task-input");
 
+    let id = parseInt(taskText.parentElement.parentElement.parentElement.parentElement.id.replace("todoList", ""));
+
     function saveTask() {
-        const newTask = input.value.trim() || "Untitled";
-        if (newTask == "Untitled")
-            taskText.textContent = originalText;
-        else
-            taskText.textContent = newTask;
+        const newTaskName = input.value.trim() || originalText;
+        taskText.textContent = newTaskName;
 
         input.replaceWith(taskText);
+
+        const targetList = todoLists.find(list => list.id === id);
+        if (targetList) {
+            const taskIndex = Array.from(taskText.parentElement.parentElement.children).indexOf(taskText.parentElement);
+            if (taskIndex !== -1) {
+                targetList.tasks[taskIndex].name = newTaskName;
+                saveToLocalStorage(todoLists);
+            }
+        }
     }
 
     input.addEventListener("blur", saveTask);
