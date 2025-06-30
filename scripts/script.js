@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const listContainer = document.getElementById("listContainer");
 
-    //console.log(todoLists);
-
     todoLists.forEach(list => {
         createListFromData(list);
     });
@@ -70,10 +68,7 @@ document.addEventListener("mouseup", function () {
     if (dragTarget) {
         dragTarget.style.cursor = "grab";
 
-        //console.log("left: ", dragTarget.style.left);
-        //console.log("top: ", dragTarget.style.top);
         let id = parseInt(dragTarget.id.replace("todoList", ""));
-        //console.log(id);
 
         let targetList = todoLists.find(list => list.id === id);
 
@@ -99,8 +94,6 @@ function createListElement(listData) {
 
     const posX = Math.min(Math.max(listData.position.x, 0), width - safeMargin);
     const posY = Math.min(Math.max(listData.position.y, 0), height - safeMargin);
-
-    console.log("CREATE LIST --ns: ", listData);
     const listContainer = document.getElementById("listContainer");
 
     const todoList = document.createElement("div");
@@ -192,13 +185,9 @@ function handleCreateList() {
         return;
     }
 
-    console.log("new ID: ", newListData.id);
-
     todoLists.push(newListData);
     saveToLocalStorage(todoLists);
     createListElement(newListData);
-
-    console.log("AFTER CREATE TLs: ", todoLists);
 }
 
 /**
@@ -208,8 +197,6 @@ function handleCreateList() {
 function createListFromData(listData) {
     createListElement(listData);
 
-    console.log("LD", listData);
-
     const listElement = document.getElementById(`todoList${listData.id}`);
     const listTasks = listElement.querySelector(".list-tasks");
 
@@ -217,8 +204,6 @@ function createListFromData(listData) {
         const taskElement = createTaskElement(taskData);
         listTasks.appendChild(taskElement);
     });
-
-    console.log("AFTER LOAD TLs: ", todoLists);
 }
 
 /**
@@ -226,7 +211,6 @@ function createListFromData(listData) {
  * @param {div} taskText text to be changed
  */
 function renameTask(taskText) {
-    //console.log(taskText);
     const MAX_CHARS = MAX_TASK_CHARS;
     const originalText = taskText.textContent.trim();
 
@@ -350,7 +334,6 @@ function addTask(listId, taskContainer) {
     input.classList.add("task-input");
 
     let id = parseInt(taskContainer.parentElement.parentElement.id.replace("todoList", ""));
-    //console.log(id);
 
     const MAX_CHARS = MAX_TASK_CHARS;
 
