@@ -177,6 +177,16 @@ body {
     color: var(--blue-color-hover);
 }
 
+.task-input {
+    margin-top: 1rem;
+    height: 1.5rem;
+    padding: .0625rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--text-color);
+    background-color: var(--main-color);
+    border: none;
+}
+
 .task-item {
     position: relative;
     padding-top: .5rem;
