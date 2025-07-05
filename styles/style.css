@@ -24,6 +24,7 @@
     --ccm-color-cyan: #35ffff;
     --ccm-color-blue: #3578ff;
     --ccm-color-purple: #8d35ff;
+}
 
 .dark-mode {
     --text-color: #dcd7d7;
