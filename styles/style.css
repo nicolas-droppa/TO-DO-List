@@ -15,6 +15,8 @@
     --green-color-hover: rgb(66, 206, 110);
     --box-shadow-color: #bbbbbb;
 
+    --title-color: #dee6e8;
+
     --ccm-color-red: #ff3535;
     --ccm-color-orange: #ff9d35;
     --ccm-color-yellow: #fffc35;
@@ -22,8 +24,6 @@
     --ccm-color-cyan: #35ffff;
     --ccm-color-blue: #3578ff;
     --ccm-color-purple: #8d35ff;
-    --ccm-color-pink: #ff35d7;
-}
 
 .dark-mode {
     --text-color: #dcd7d7;
@@ -34,6 +34,8 @@
     --main-color-complement: #1a1a1a;
     --main-color-complement-hover: #151515;
     --box-shadow-color: #1b1b1b;
+
+    --title-color: #212020;
 }
 
 * {
@@ -68,7 +70,6 @@ body {
 }
 
 .list-content {
-    padding: 1rem;
     background-color: var(--main-color);
 }
 
@@ -78,10 +79,18 @@ body {
     background-color: var(--ccm-color-red);
 }
 
+.list-tasks {
+    padding: 1rem;
+}
+
 .list-header {
     position: relative;
     display: flex;
     flex-direction: row;
+    /* background-color: var(--title-color); */
+    border-bottom: solid .15rem var(--title-color);
+    padding: 1rem;
+    padding-bottom: 0rem;
 }
 
 .list-title {
@@ -101,20 +110,29 @@ body {
     padding: .0625rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--text-color);
-    background-color: var(--main-color);
+    background-color: var(--title-color);
     border: none;
+}
+
+.list-color-change {
+    color: var(--blue-color);
+    font-size: 1.5rem;
+    position: absolute;
+    right: 3.15rem;
 }
 
 .list-rename {
     color: var(--blue-color);
     font-size: 1.5rem;
+    position: absolute;
+    right: 4.5rem;
 }
 
 .list-remove {
-    position: absolute;
-    right: 0;
     color: var(--red-color);
     font-size: 1.5rem;
+    position: absolute;
+    right: 1.5rem;
 }
 
 .task-button {
@@ -155,6 +173,16 @@ body {
     color: var(--blue-color-hover);
 }
 
+#ranameListButton i{
+    font-size: 1.5rem;
+    color: var(--blue-color);
+}
+
+#renameListButton:hover i{
+    cursor: pointer;
+    color: var(--blue-color-hover);
+}
+
 #removeListButton i{
     font-size: 1.5rem;
     color: var(--red-color);
@@ -167,8 +195,6 @@ body {
 
 #changeListColorButton i{
     font-size: 1.5rem;
-    margin-top: .3rem;
-    margin-left: .5rem;
     color: var(--blue-color);
 }
 
