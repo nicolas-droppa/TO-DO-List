@@ -568,7 +568,15 @@ function renderListOverview() {
         const item = document.createElement("div");
         item.classList.add("list-overview-item");
 
-        item.textContent = `${list.name} (${list.tasks.length} tasks)`;
+        const icon = document.createElement("i");
+        icon.className = "fa-solid fa-list";
+
+        const text = document.createElement("span");
+        text.classList.add("text");
+        text.textContent = `${list.name} (${list.tasks.length})`;
+
+        item.appendChild(icon);
+        item.appendChild(text);
 
         item.addEventListener("click", () => {
             const targetList = document.getElementById(`todoList${list.id}`);
