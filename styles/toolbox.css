@@ -49,3 +49,21 @@
     margin-top: .25rem;
     margin-bottom: .25rem;
 }
+
+#listSection {
+    padding: 1rem;
+    background: var(--bg-color-light);
+    border: 1px solid var(--border-color);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.list-overview-item {
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.list-overview-item:hover {
+    background: var(--hover-color);
+}

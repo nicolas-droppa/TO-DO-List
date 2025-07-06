@@ -35,6 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
     todoLists.forEach(list => {
         createListFromData(list);
     });
+
+    renderListOverview();
 });
 
 document.addEventListener("mousedown", function (event) {
@@ -189,6 +191,7 @@ function handleCreateList() {
     todoLists.push(newListData);
     saveToLocalStorage(todoLists);
     createListElement(newListData);
+    renderListOverview();
 }
 
 /**
@@ -273,6 +276,8 @@ function deleteList(list) {
     } else {
         console.log("List not found!");
     }
+
+    renderListOverview();
 }
 
 /**
@@ -553,4 +558,25 @@ function getWindowSize() {
         width: window.innerWidth,
         height: window.innerHeight
     };
+}
+
+function renderListOverview() {
+    const listSection = document.getElementById("listSection");
+    listSection.innerHTML = "";
+
+    todoLists.forEach(list => {
+        const item = document.createElement("div");
+        item.classList.add("list-overview-item");
+
+        item.textContent = `${list.name} (${list.tasks.length} tasks)`;
+
+        item.addEventListener("click", () => {
+            const targetList = document.getElementById(`todoList${list.id}`);
+            if (targetList) {
+                targetList.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
+
+        listSection.appendChild(item);
+    });
 }
