@@ -52,11 +52,12 @@ document.addEventListener("mousemove", function (event) {
     if (isDragging && dragTarget) {
         const container = document.getElementById("listContainer");
         const containerRect = container.getBoundingClientRect();
+        const toolboxWidth = 80;
 
         let x = event.clientX - offsetX - containerRect.left;
         let y = event.clientY - offsetY - containerRect.top;
 
-        x = Math.max(0, Math.min(container.clientWidth - dragTarget.offsetWidth, x));
+        x = Math.max(toolboxWidth, Math.min(container.clientWidth - dragTarget.offsetWidth, x));
         y = Math.max(0, Math.min(container.clientHeight - dragTarget.offsetHeight, y));
 
         dragTarget.style.left = `${x}px`;
@@ -92,7 +93,7 @@ function createListElement(listData) {
     const { width, height } = getWindowSize();
     const safeMargin = 50;
 
-    const posX = Math.min(Math.max(listData.position.x, 0), width - safeMargin);
+    const posX = Math.min(Math.max(listData.position.x, 80), width - safeMargin);
     const posY = Math.min(Math.max(listData.position.y, 0), height - safeMargin);
     const listContainer = document.getElementById("listContainer");
 
