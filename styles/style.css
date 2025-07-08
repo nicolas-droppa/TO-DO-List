@@ -111,7 +111,7 @@ body {
     padding: .0625rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--text-color);
-    background-color: var(--title-color);
+    background-color: var(--main-color);
     border: none;
 }
 
