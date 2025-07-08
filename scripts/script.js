@@ -47,6 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("mousedown", function (event) {
+    const activeElement = document.activeElement;
+    if (activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA"))
+        return;
+    
     const list = event.target.closest(".todo-list");
     if (list && !event.target.closest("button")) {
         isDragging = true;
