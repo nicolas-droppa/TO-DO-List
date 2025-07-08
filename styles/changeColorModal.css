@@ -1,5 +1,5 @@
 /*@import url('variables.css');*/
-:root {
+/* :root {
     --text-color: #1a1a1a;
     --text-color-light: #f7f7f7;
     --bg-color: #eff7f9;
@@ -34,7 +34,7 @@
     --main-color-complement: #1a1a1a;
     --main-color-complement-hover: #151515;
     --box-shadow-color: #1b1b1b;
-}
+} */
 
 .change-color-modal-bg {
     position: absolute;

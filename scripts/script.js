@@ -36,6 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
         createListFromData(list);
     });
 
+    const toolbox = document.getElementById("toolbox");
+    const icon = document.querySelector("#toggleToolboxButton i");
+    if (localStorage.getItem("sidebarExpanded") === "true") {
+        toolbox.classList.add("expanded");
+        icon.classList.replace("fa-angle-right", "fa-angle-left");
+    }
+
     renderListOverview();
 });
 
@@ -588,3 +595,15 @@ function renderListOverview() {
         listSection.appendChild(item);
     });
 }
+
+document.getElementById("toggleToolboxButton").addEventListener("click", () => {
+    const toolbox = document.getElementById("toolbox");
+    const icon = document.querySelector("#toggleToolboxButton i");
+
+    toolbox.classList.toggle("expanded");
+
+    if (toolbox.classList.contains("expanded"))
+        icon.classList.replace("fa-angle-right", "fa-angle-left");
+    else
+        icon.classList.replace("fa-angle-left", "fa-angle-right");
+});
